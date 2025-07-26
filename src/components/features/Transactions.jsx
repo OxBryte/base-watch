@@ -4,6 +4,7 @@ import { TbCoinFilled } from "react-icons/tb";
 import { useGetTransactions } from "../hooks/useGetTransactions";
 import History from "./History";
 import { PiArrowCounterClockwise } from "react-icons/pi";
+import Nft from "./Nft";
 
 const Tabs = [
   { name: "Holdings", icon: <TbCoinFilled size={18} /> },
@@ -52,6 +53,7 @@ export default function Transactions({ walletAddress }) {
           <PiArrowCounterClockwise />
         </div>
       </div>
+      {tabs ===1 && <Nft address={walletAddress} />}
 
       {tabs === 2 && (
         <div className="w-full min-h-53 relative">
