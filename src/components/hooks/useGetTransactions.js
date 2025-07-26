@@ -68,10 +68,8 @@ export const useGetTransactions = ({ chainId, address, page }) => {
     fetchTransactions(chainId);
   }, [chainId]);
 
-  const refetch = () => {
-    setIsLoading(true);
-    fetchTransactions(chainId);
-    setIsLoading(false);
+  const refetch = async () => {
+    await fetchTransactions(chainId);
   };
 
   return {
@@ -141,8 +139,8 @@ export const useGetBalance = ({ chainId, address }) => {
     fetchBalance(chainId);
   }, [chainId]);
 
-  const refetch = () => {
-    fetchBalance(chainId);
+  const refetch = async () => {
+    await fetchBalance(chainId);
   };
 
   return {
@@ -217,8 +215,8 @@ export const useGetMultiChainTransactions = (address) => {
     fetchAllChainTransactions();
   }, []);
 
-  const refetch = () => {
-    fetchAllChainTransactions();
+  const refetch = async () => {
+    await fetchAllChainTransactions();
   };
 
   return {

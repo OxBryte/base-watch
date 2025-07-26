@@ -51,7 +51,7 @@ export default function Dashboard() {
               <PiStar />
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <div
               className={
                 "p-2 border border-white/10 rounded-full cursor-pointer hover:bg-white/20" +
@@ -61,7 +61,7 @@ export default function Dashboard() {
             >
               <PiArrowCounterClockwise />
             </div>
-            {/* <div className="p-2 border border-white/10 rounded-full">
+            <div className="p-2 border border-white/10 rounded-full">
               <PiGear />
             </div>
             <input
@@ -70,8 +70,8 @@ export default function Dashboard() {
               id=""
               placeholder="Search address..."
               className="py-2 px-4 placeholder:text-xs text-sm rounded-full bg-white/10 border-none"
-            /> */}
-          </div>
+            />
+          </div> */}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full justify-between">
           <div className="h-52 border border-white/5 relative flex flex-col justify-between gap-7 rounded-[14px] bg-gradient-to-br from-transparent to-[#0000FF]/10 p-5">

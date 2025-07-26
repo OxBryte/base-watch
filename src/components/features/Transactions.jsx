@@ -3,6 +3,7 @@ import { RiHistoryFill, RiNftFill } from "react-icons/ri";
 import { TbCoinFilled } from "react-icons/tb";
 import { useGetTransactions } from "../hooks/useGetTransactions";
 import History from "./History";
+import { PiArrowCounterClockwise } from "react-icons/pi";
 
 const Tabs = [
   { name: "Holdings", icon: <TbCoinFilled size={18} /> },
@@ -15,6 +16,7 @@ export default function Transactions({ walletAddress }) {
   const {
     transactions: history,
     isLoading: isLoadingHistory,
+    refetch,
     isError,
     error,
   } = useGetTransactions({
@@ -25,19 +27,30 @@ export default function Transactions({ walletAddress }) {
 
   return (
     <div className="w-full space-y-6">
-      <div className="w-full flex gap-1 items-center">
-        {Tabs.map((tab, index) => (
-          <div
-            key={index}
-            className={`px-4 py-2.5 flex gap-1 items-center rounded-full text-sm cursor-pointer hover:text-white/80 ${
-              tabs === index ? "text-white bg-white/10" : "text-white/50"
-            }`}
-            onClick={() => setTabs(index)}
-          >
-            {tab.icon}
-            <span className="">{tab.name}</span>
-          </div>
-        ))}
+      <div className="w-full flex gap-1 items-center justify-between">
+        <div className="w-full flex gap-1 items-center">
+          {Tabs.map((tab, index) => (
+            <div
+              key={index}
+              className={`px-4 py-2.5 flex gap-1 items-center rounded-full text-sm cursor-pointer hover:text-white/80 ${
+                tabs === index ? "text-white bg-white/10" : "text-white/50"
+              }`}
+              onClick={() => setTabs(index)}
+            >
+              {tab.icon}
+              <span className="">{tab.name}</span>
+            </div>
+          ))}
+        </div>
+        <div
+          className={
+            "p-2 border border-white/10 rounded-full cursor-pointer hover:bg-white/20" +
+            (isLoadingHistory ? " !animate-spin" : "")
+          }
+          onClick={() => refetch()}
+        >
+          <PiArrowCounterClockwise />
+        </div>
       </div>
 
       {tabs === 2 && (
@@ -53,7 +66,7 @@ export default function Transactions({ walletAddress }) {
               <p className="text-white/50 text-sm">{error}</p>
             </div>
           )}
-          {isLoadingHistory && isError && (
+          {isLoadingHistory && (
             <div className="w-full h-52 relative flex flex-col items-center justify-center gap-3">
               <p className="animate-pulse">Base Watch</p>
               <p className="text-white/50 text-sm">Fetching transactions...</p>
