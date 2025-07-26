@@ -44,7 +44,7 @@ export default function Transactions({ walletAddress }) {
         </div>
         <div
           className={
-            "p-2 border border-white/10 rounded-full cursor-pointer hover:bg-white/20" +
+            "hidden md:block p-2 border border-white/10 rounded-full cursor-pointer hover:bg-white/20" +
             (isLoadingHistory ? " !animate-spin" : "")
           }
           onClick={() => refetch()}

@@ -12,7 +12,6 @@ import {
 } from "react-icons/pi";
 import { CgSwap } from "react-icons/cg";
 import Transactions from "../components/features/Transactions";
-import { useGetTransactions } from "../components/hooks/useGetTransactions";
 
 export default function Dashboard() {
   const [seeBalance, setSeeBalance] = React.useState(true);
@@ -20,12 +19,6 @@ export default function Dashboard() {
   const queryAddress = searchParams.get("address");
 
   const walletAddress = queryAddress;
-
-  // Now use the extracted address for data fetching
-  const { isLoading, refetch } = useGetTransactions({
-    chainId: 42161,
-    address: walletAddress,
-  });
 
   // Copy address to clipboard
   const copyToClipboard = () => {

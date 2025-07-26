@@ -14,7 +14,7 @@ export default function Navbar() {
 
   return (
     <div className="w-full mx-auto py-2 px-3 md:py-4 md:px-10 border-b border-white/10 h-[4rem] flex items-center">
-      <div className="w-full items-center flex justify-between gap-4 mx-auto">
+      <div className="w-full items-center flex justify-between gap-6 mx-auto">
         <p>Watch</p>
         <form onSubmit={handleSearch} className="w-full max-w-[420px]">
           <input
@@ -25,7 +25,7 @@ export default function Navbar() {
             onChange={(e) => setSearchAddress(e.target.value)}
           />
         </form>
-        <div className="flex items-center gap-2">
+        <div className="hidden md:flex items-center gap-2">
           <select
             className="py-2 px-4 text-sm rounded-full border border-white/10 bg-transparent"
             onChange={(e) => console.log(`Selected chain: ${e.target.value}`)}
