@@ -9,6 +9,7 @@ import {
   PiStar,
   PiStarFill,
 } from "react-icons/pi";
+import { CgSwap, CgSwapVertical } from "react-icons/cg";
 
 export default function Dashboard() {
   const [seeBalance, setSeeBalance] = React.useState(true);
@@ -65,8 +66,25 @@ export default function Dashboard() {
                 )}
               </div>
             </div>
+            <div className="flex items-center gap-2">
+              <div className="px-3 py-1.5 rounded-lg bg-black/40 border border-white/20 backdrop-blur-[200px] text-[12px] flex items-center gap-1">
+                <CgSwap size={23} />
+                Swap
+              </div>
+              <div className="px-3 py-1.5 rounded-lg bg-black/40 border border-white/20 backdrop-blur-[200px] text-[12px] flex items-center gap-1">
+                <CgSwap size={23} />
+                Buy/Sell
+              </div>
+            </div>
+            <div className="absolute bottom-0 right-0">
+              <img
+                src="https://jup.ag/_next/image?url=%2Fimages%2Fportfolio%2Fjupcat-up.png&w=256&q=75"
+                alt=""
+                className="w-26"
+              />
+            </div>
           </div>
-          <div className="h-52 relative flex flex-col justify-between gap-7 rounded-[14px] bg-gradient-to-br from-transparent to-[#172829] p-5"></div>
+          <div className="h-52 relative flex flex-col justify-between gap-7 rounded-[14px] bg-none border border-white/20 p-5"></div>
         </div>
       </div>
     </div>
