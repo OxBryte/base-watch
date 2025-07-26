@@ -27,6 +27,7 @@ export default function Transactions() {
           </div>
         ))}
       </div>
+      {/*  */}
       <div className="w-full flex items-center justify-center h-32">
         <p className="text-white/50 text-sm">
           {tabs === 0
