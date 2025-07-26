@@ -3,12 +3,16 @@ import { truncateAddress } from "../components/utils/utils";
 import {
   PiArrowCounterClockwise,
   PiCopy,
+  PiEye,
+  PiEyeSlash,
   PiGear,
   PiStar,
   PiStarFill,
 } from "react-icons/pi";
 
 export default function Dashboard() {
+  const [seeBalance, setSeeBalance] = React.useState(true);
+
   return (
     <div className="w-full">
       <div className="space-y-5 w-full">
@@ -42,7 +46,26 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full justify-between">
-          <div className="h-52 relative flex flex-col justify-between gap-7 rounded-[14px] bg-gradient-to-br from-transparent to-[#172829] p-5"></div>
+          <div className="h-52 relative flex flex-col justify-between gap-7 rounded-[14px] bg-gradient-to-br from-transparent to-[#172829] p-5">
+            <div className="flex items-top justify-between">
+              <div className="space-y-2">
+                <h1 className="text-white/50 text-sm font-medium">Net Worth</h1>
+                <p className="text-white text-2xl font-bold">
+                  {seeBalance ? "$12,345.67" : "*****"}
+                </p>
+              </div>
+              <div
+                className="cursor-pointer"
+                onClick={() => setSeeBalance(!seeBalance)}
+              >
+                {seeBalance ? (
+                  <PiEye className="text-white/50 hover:text-white" />
+                ) : (
+                  <PiEyeSlash className="text-white/50 hover:text-white" />
+                )}
+              </div>
+            </div>
+          </div>
           <div className="h-52 relative flex flex-col justify-between gap-7 rounded-[14px] bg-gradient-to-br from-transparent to-[#172829] p-5"></div>
         </div>
       </div>
