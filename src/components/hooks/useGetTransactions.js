@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const SUPPORTED_CHAINS = [1, 137, 42161, 146, 8453, 43114, 10, 42220];
+const SUPPORTED_CHAINS = [1, 137, 42161, 146, 8453, 43114, 10, 42220, 999];
 const API_TOKEN = import.meta.env.VITE_ETHERSCAN_API_TOKEN;
 const BASE_URL = "https://api.etherscan.io/v2/api";
 

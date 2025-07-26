@@ -20,7 +20,7 @@ export default function Transactions({ walletAddress }) {
     isError,
     error,
   } = useGetTransactions({
-    chainId: 8453,
+    chainId: 999,
     address: walletAddress,
     page: 1,
   });

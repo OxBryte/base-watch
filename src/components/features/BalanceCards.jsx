@@ -7,7 +7,7 @@ export default function BalanceCards({ walletAddress }) {
   const [seeBalance, setSeeBalance] = React.useState(true);
 
   const { balanceInEther, balanceInUsd, isLoading, refetch } = useGetBalance({
-    chainId: 8453,
+    chainId: 999,
     address: walletAddress,
   });
 
