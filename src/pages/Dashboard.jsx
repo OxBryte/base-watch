@@ -19,8 +19,10 @@ export default function Dashboard() {
     <div className="w-full">
       <div className="space-y-6 w-full">
         <div className="flex gap-4 md:items-center flex-col md:flex-row w-full justify-between">
-          <div className="px-3 py-2 rounded-full border border-white/10 flex items-center gap-2.5">
-            <div className="w-2 h-2 rounded-full bg-green-400"></div>
+          <div className="px-3 py-2 w-fit rounded-full border border-white/10 flex items-center gap-2.5">
+            <div className="w-2 h-2 relative rounded-full bg-green-400">
+              <div className="w-2 h-2 animate-pulse blur-[5px] absolute top-0 left-0 -z-1 rounded-full bg-green-400"></div>
+            </div>
             <p className="text-[12px] font-semibold">
               {truncateAddress("9oAmAmDbEzHfabwpSVgRAmW3Fm7sy1sNZvoQGAJwQ5r5")}
             </p>
