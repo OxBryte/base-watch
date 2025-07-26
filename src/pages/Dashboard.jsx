@@ -4,6 +4,7 @@ import { truncateAddress } from "../components/utils/utils";
 import { PiCopy, PiStar } from "react-icons/pi";
 import Transactions from "../components/features/Transactions";
 import BalanceCards from "../components/features/BalanceCards";
+import toast from "react-hot-toast";
 
 export default function Dashboard() {
   const [searchParams] = useSearchParams();
@@ -33,14 +34,7 @@ export default function Dashboard() {
   const copyToClipboard = () => {
     if (!walletAddress) return;
     navigator.clipboard.writeText(walletAddress);
-    // Use a more modern approach than alert()
-    // You could use a toast notification library here
-    const feedback = document.createElement("div");
-    feedback.textContent = "Address copied!";
-    feedback.className =
-      "fixed top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded shadow-lg";
-    document.body.appendChild(feedback);
-    setTimeout(() => document.body.removeChild(feedback), 2000);
+    toast.success("Address copied successfully!");
   };
 
   // If no address is provided, show a message
