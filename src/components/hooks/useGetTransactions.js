@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
 
-const SUPPORTED_CHAINS = [42161, 8453, 10, 534352, 81457];
-const API_TOKEN = "QTFY7T99QSRKHKVIUUNRH3BMZYKIVBB2S9";
-const WALLET_ADDRESS = "0xB9Ffcd5fB867905e2f823a5A29DC7A2cD1C101b5";
+const SUPPORTED_CHAINS = [
+  1, 137, 42161, 146, 8453, 43114, 10, 534352, 42220, 81457,
+];
+const API_TOKEN = import.meta.env.VITE_ETHERSCAN_API_TOKEN;
 const BASE_URL = "https://api.etherscan.io/v2/api";
 
-export const useGetTransactions = (chainId = 42161) => {
+export const useGetTransactions = ({ chainId, address, page }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState(null);
+
+  const pageNumber = page || 1; // Default to page 1 if not provided
 
   const fetchTransactions = async (selectedChainId) => {
     if (!SUPPORTED_CHAINS.includes(selectedChainId)) {
@@ -24,7 +27,7 @@ export const useGetTransactions = (chainId = 42161) => {
 
     try {
       // Using Etherscan V2 API for transaction history
-      const url = `${BASE_URL}?chainid=${selectedChainId}&module=account&action=txlist&address=${WALLET_ADDRESS}&startblock=0&endblock=99999999&page=1&offset=100&sort=desc&apikey=${API_TOKEN}`;
+      const url = `${BASE_URL}?chainid=${selectedChainId}&module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=${pageNumber}&offset=100&sort=desc&apikey=${API_TOKEN}`;
 
       const response = await fetch(url);
 
@@ -42,7 +45,7 @@ export const useGetTransactions = (chainId = 42161) => {
       setData({
         transactions: result.result || [],
         chainId: selectedChainId,
-        address: WALLET_ADDRESS,
+        address: address,
         status: result.status,
         message: result.message,
       });
@@ -81,7 +84,7 @@ export const useGetTransactions = (chainId = 42161) => {
 };
 
 // Hook to get balance instead of transactions (based on your original code)
-export const useGetBalance = (chainId = 42161) => {
+export const useGetBalance = ({ chainId, address }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -100,7 +103,7 @@ export const useGetBalance = (chainId = 42161) => {
 
     try {
       // Using your original balance API call with V2
-      const url = `${BASE_URL}?chainid=${selectedChainId}&module=account&action=balance&address=${WALLET_ADDRESS}&tag=latest&apikey=${API_TOKEN}`;
+      const url = `${BASE_URL}?chainid=${selectedChainId}&module=account&action=balance&address=${address}&tag=latest&apikey=${API_TOKEN}`;
 
       const response = await fetch(url);
 
@@ -117,7 +120,7 @@ export const useGetBalance = (chainId = 42161) => {
       setData({
         balance: result.result,
         chainId: selectedChainId,
-        address: WALLET_ADDRESS,
+        address: address,
         // Convert Wei to Ether for convenience
         balanceInEther: (parseInt(result.result) / Math.pow(10, 18)).toString(),
       });
@@ -153,7 +156,7 @@ export const useGetBalance = (chainId = 42161) => {
 };
 
 // Hook to fetch data from multiple chains using V2 API
-export const useGetMultiChainTransactions = () => {
+export const useGetMultiChainTransactions = (address) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -170,7 +173,7 @@ export const useGetMultiChainTransactions = () => {
     // Fetch from all supported chains
     const promises = SUPPORTED_CHAINS.map(async (chainId) => {
       try {
-        const url = `${BASE_URL}?chainid=${chainId}&module=account&action=txlist&address=${WALLET_ADDRESS}&startblock=0&endblock=99999999&page=1&offset=50&sort=desc&apikey=${API_TOKEN}`;
+        const url = `${BASE_URL}?chainid=${chainId}&module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=50&sort=desc&apikey=${API_TOKEN}`;
 
         const response = await fetch(url);
 
@@ -190,7 +193,7 @@ export const useGetMultiChainTransactions = () => {
         results[chainId] = {
           transactions: result.result || [],
           chainId,
-          address: WALLET_ADDRESS,
+          address: address,
           status: result.status,
           message: result.message,
         };

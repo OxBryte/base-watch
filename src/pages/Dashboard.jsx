@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams, useSearchParams } from "react-router-dom";
 import { truncateAddress } from "../components/utils/utils";
 import {
   PiArrowCounterClockwise,
@@ -9,15 +10,32 @@ import {
   PiStar,
   PiStarFill,
 } from "react-icons/pi";
-import { CgSwap, CgSwapVertical } from "react-icons/cg";
+import { CgSwap } from "react-icons/cg";
 import Transactions from "../components/features/Transactions";
-import { useGetMultiChainTransactions, useGetTransactions } from "../components/hooks/useGetTransactions";
+import { useGetTransactions } from "../components/hooks/useGetTransactions";
 
 export default function Dashboard() {
   const [seeBalance, setSeeBalance] = React.useState(true);
-  const { transactions, isLoading } = useGetTransactions(10);
-  const { allTransactions, data } = useGetMultiChainTransactions();
-  console.log("Transactions:", data);
+  const { address } = useParams();
+  const [searchParams] = useSearchParams();
+  const queryAddress = searchParams.get("address");
+
+  const walletAddress =
+    address || queryAddress || "0xB9Ffcd5fB867905e2f823a5A29DC7A2cD1C101b5";
+
+  // Now use the extracted address for data fetching
+  const { transactions, isLoading, refetch } = useGetTransactions({
+    chainId: 42161,
+    address: walletAddress,
+  });
+
+  console.log("Transactions:", transactions);
+
+  // Copy address to clipboard
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(walletAddress);
+    alert("Address copied to clipboard!");
+  };
 
   return (
     <div className="w-full">
@@ -28,9 +46,9 @@ export default function Dashboard() {
               <div className="w-2 h-2 animate-pulse blur-[5px] absolute top-0 left-0 -z-1 rounded-full bg-blue-300"></div>
             </div>
             <p className="text-[12px] font-semibold">
-              {truncateAddress("9oAmAmDbEzHfabwpSVgRAmW3Fm7sy1sNZvoQGAJwQ5r5")}
+              {truncateAddress(walletAddress, 6, 4)}
             </p>
-            <div className="">
+            <div className="cursor-pointer" onClick={copyToClipboard}>
               <PiCopy />
             </div>
             <div className="">
@@ -38,10 +56,13 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="p-2 border border-white/10 rounded-full">
+            <div
+              className="p-2 border border-white/10 rounded-full"
+              onClick={refetch}
+            >
               <PiArrowCounterClockwise />
             </div>
-            <div className="p-2 border border-white/10 rounded-full">
+            {/* <div className="p-2 border border-white/10 rounded-full">
               <PiGear />
             </div>
             <input
@@ -50,7 +71,7 @@ export default function Dashboard() {
               id=""
               placeholder="Search address..."
               className="py-2 px-4 placeholder:text-xs text-sm rounded-full bg-white/10 border-none"
-            />
+            /> */}
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full justify-between">
@@ -93,7 +114,7 @@ export default function Dashboard() {
           </div>
           <div className="h-52 relative flex flex-col justify-between gap-7 rounded-[14px] bg-none border border-white/20 p-5"></div>
         </div>
-        <Transactions />
+        <Transactions address={walletAddress} />
       </div>
     </div>
   );
