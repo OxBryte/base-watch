@@ -11,9 +11,13 @@ import {
 } from "react-icons/pi";
 import { CgSwap, CgSwapVertical } from "react-icons/cg";
 import Transactions from "../components/features/Transactions";
+import { useGetMultiChainTransactions, useGetTransactions } from "../components/hooks/useGetTransactions";
 
 export default function Dashboard() {
   const [seeBalance, setSeeBalance] = React.useState(true);
+  const { transactions, isLoading } = useGetTransactions(10);
+  const { allTransactions, data } = useGetMultiChainTransactions();
+  console.log("Transactions:", data);
 
   return (
     <div className="w-full">
