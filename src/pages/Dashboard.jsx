@@ -1,5 +1,5 @@
-import React from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useSearchParams, useParams } from "react-router-dom";
 import { truncateAddress } from "../components/utils/utils";
 import { PiCopy, PiStar } from "react-icons/pi";
 import Transactions from "../components/features/Transactions";
@@ -7,14 +7,53 @@ import BalanceCards from "../components/features/BalanceCards";
 
 export default function Dashboard() {
   const [searchParams] = useSearchParams();
+  const params = useParams();
+
+  // Get address from either URL params or query params
+  const urlAddress = params.address;
   const queryAddress = searchParams.get("address");
-  const walletAddress = queryAddress;
+  const walletAddress = urlAddress || queryAddress;
+
+  // Add state to force re-renders
+  const [key, setKey] = useState(walletAddress);
+
+  // Effect to reset the component when address changes
+  useEffect(() => {
+    // Update the key to force a remount of child components
+    setKey(walletAddress);
+
+    // You could also do other initialization here if needed
+    console.log("Address changed, reloading dashboard for:", walletAddress);
+
+    // Optional: scroll to top when address changes
+    window.scrollTo(0, 0);
+  }, [walletAddress]);
 
   // Copy address to clipboard
   const copyToClipboard = () => {
+    if (!walletAddress) return;
     navigator.clipboard.writeText(walletAddress);
-    alert("Address copied to clipboard!");
+    // Use a more modern approach than alert()
+    // You could use a toast notification library here
+    const feedback = document.createElement("div");
+    feedback.textContent = "Address copied!";
+    feedback.className =
+      "fixed top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded shadow-lg";
+    document.body.appendChild(feedback);
+    setTimeout(() => document.body.removeChild(feedback), 2000);
   };
+
+  // If no address is provided, show a message
+  if (!walletAddress) {
+    return (
+      <div className="w-full h-52 flex flex-col items-center justify-center">
+        <p className="text-lg mb-4">No wallet address provided</p>
+        <p className="text-sm text-white/50">
+          Enter an address in the search bar above
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
@@ -34,30 +73,14 @@ export default function Dashboard() {
               <PiStar />
             </div>
           </div>
-          {/* <div className="flex items-center gap-3">
-            <div
-              className={
-                "p-2 border border-white/10 rounded-full cursor-pointer hover:bg-white/20" +
-                (isLoading ? " !animate-spin" : "")
-              }
-              onClick={refetch}
-            >
-              <PiArrowCounterClockwise />
-            </div>
-            <div className="p-2 border border-white/10 rounded-full">
-              <PiGear />
-            </div>
-            <input
-              type="text"
-              name=""
-              id=""
-              placeholder="Search address..."
-              className="py-2 px-4 placeholder:text-xs text-sm rounded-full bg-white/10 border-none"
-            />
-          </div> */}
         </div>
-        <BalanceCards walletAddress={walletAddress} />
-        <Transactions walletAddress={walletAddress} />
+
+        {/* Use the key prop to force remounting when address changes */}
+        <BalanceCards key={`balance-${key}`} walletAddress={walletAddress} />
+        <Transactions
+          key={`transactions-${key}`}
+          walletAddress={walletAddress}
+        />
       </div>
     </div>
   );

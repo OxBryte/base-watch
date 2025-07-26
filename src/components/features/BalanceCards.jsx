@@ -20,10 +20,12 @@ export default function BalanceCards({ walletAddress }) {
               <h1 className="text-white/50 text-sm font-medium">Net Worth</h1>
               <div className="flex items-center gap-2">
                 <p className="text-white text-2xl font-bold">
-                  ${seeBalance ? balanceInUsd : "*****"}{" "}
+                  ${seeBalance ? (balanceInUsd ? balanceInUsd : "00") : "*****"}{" "}
                   <span className="text-white/50 font-light text-sm">
                     {seeBalance
-                      ? parseFloat(balanceInEther).toFixed(5)
+                      ? parseFloat(
+                          balanceInEther ? balanceInEther : "00"
+                        ).toFixed(5)
                       : "*****"}{" "}
                     ETH
                   </span>
