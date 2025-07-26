@@ -20,8 +20,8 @@ export default function Dashboard() {
       <div className="space-y-6 w-full">
         <div className="flex gap-4 md:items-center flex-col md:flex-row w-full justify-between">
           <div className="px-3 py-2 w-fit rounded-full border border-white/10 flex items-center gap-2.5">
-            <div className="w-2 h-2 relative rounded-full bg-green-400">
-              <div className="w-2 h-2 animate-pulse blur-[5px] absolute top-0 left-0 -z-1 rounded-full bg-green-400"></div>
+            <div className="w-2 h-2 relative rounded-full bg-[#0000FF]">
+              <div className="w-2 h-2 animate-pulse blur-[5px] absolute top-0 left-0 -z-1 rounded-full bg-blue-300"></div>
             </div>
             <p className="text-[12px] font-semibold">
               {truncateAddress("9oAmAmDbEzHfabwpSVgRAmW3Fm7sy1sNZvoQGAJwQ5r5")}
@@ -50,7 +50,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full justify-between">
-          <div className="h-52 border border-white/5 relative flex flex-col justify-between gap-7 rounded-[14px] bg-gradient-to-br from-transparent to-[#172829] p-5">
+          <div className="h-52 border border-white/5 relative flex flex-col justify-between gap-7 rounded-[14px] bg-gradient-to-br from-transparent to-[#0000FF]/10 p-5">
             <div className="flex items-top justify-between">
               <div className="space-y-2">
                 <h1 className="text-white/50 text-sm font-medium">Net Worth</h1>
