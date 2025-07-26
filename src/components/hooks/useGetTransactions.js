@@ -69,7 +69,9 @@ export const useGetTransactions = ({ chainId, address, page }) => {
   }, [chainId]);
 
   const refetch = () => {
+    setIsLoading(true);
     fetchTransactions(chainId);
+    setIsLoading(false);
   };
 
   return {

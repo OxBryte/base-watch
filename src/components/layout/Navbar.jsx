@@ -25,7 +25,21 @@ export default function Navbar() {
             onChange={(e) => setSearchAddress(e.target.value)}
           />
         </form>
-        <p className="text-xs">Connect wallet</p>
+        <div className="flex items-center gap-2">
+          <select
+            className="py-2 px-4 text-sm rounded-full border border-white/10 bg-transparent"
+            onChange={(e) => console.log(`Selected chain: ${e.target.value}`)}
+          >
+            <option value="base">Base</option>
+            <option value="celo">Celo</option>
+            <option value="arbitrum">Arbitrum</option>
+            <option value="polygon">Polygon</option>
+            <option value="optimism">Optimism</option>
+          </select>
+          <p className="text-xs px-5 py-2 bg-[#0000ff] hover:bg-white/20 rounded-full cursor-pointer">
+            Connect wallet
+          </p>
+        </div>
       </div>
     </div>
   );

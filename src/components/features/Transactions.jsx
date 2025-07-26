@@ -1,6 +1,8 @@
 import React from "react";
 import { RiHistoryFill, RiNftFill } from "react-icons/ri";
 import { TbCoinFilled } from "react-icons/tb";
+import { useGetTransactions } from "../hooks/useGetTransactions";
+import History from "./History";
 
 const Tabs = [
   { name: "Holdings", icon: <TbCoinFilled size={18} /> },
@@ -8,8 +10,18 @@ const Tabs = [
   { name: "Transactions", icon: <RiHistoryFill size={18} /> },
 ];
 
-export default function Transactions() {
+export default function Transactions({ walletAddress }) {
   const [tabs, setTabs] = React.useState(0);
+  const {
+    transactions: history,
+    isLoading: isLoadingHistory,
+    isError,
+    error,
+  } = useGetTransactions({
+    chainId: 8453,
+    address: walletAddress,
+    page: 1,
+  });
 
   return (
     <div className="w-full space-y-6">
@@ -27,16 +39,33 @@ export default function Transactions() {
           </div>
         ))}
       </div>
-      {/*  */}
-      <div className="w-full flex items-center justify-center h-32">
-        <p className="text-white/50 text-sm">
-          {tabs === 0
-            ? "No holdings found."
-            : tabs === 1
-            ? "No NFTs found."
-            : "No transactions found."}
-        </p>
-      </div>
+
+      {tabs === 2 && (
+        <div className="w-full min-h-53 relative">
+          {history?.length === 0 && (
+            <div className="w-full h-52 relative flex flex-col items-center justify-center gap-7">
+              <p className="text-white/50 text-sm">No transactions found.</p>
+            </div>
+          )}
+          {isError && (
+            <div className="w-full h-52 relative flex flex-col items-center justify-center gap-3">
+              <p className="text-red-400">Error loading transactions</p>
+              <p className="text-white/50 text-sm">{error}</p>
+            </div>
+          )}
+          {isLoadingHistory && isError && (
+            <div className="w-full h-52 relative flex flex-col items-center justify-center gap-3">
+              <p className="animate-pulse">Base Watch</p>
+              <p className="text-white/50 text-sm">Fetching transactions...</p>
+            </div>
+          )}
+
+          {/* Show transactions when available */}
+          {!isLoadingHistory && !isError && history && history.length > 0 && (
+            <History transactions={history} />
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { truncateAddress } from "../components/utils/utils";
 import {
   PiArrowCounterClockwise,
@@ -16,20 +16,16 @@ import { useGetTransactions } from "../components/hooks/useGetTransactions";
 
 export default function Dashboard() {
   const [seeBalance, setSeeBalance] = React.useState(true);
-  const { address } = useParams();
   const [searchParams] = useSearchParams();
   const queryAddress = searchParams.get("address");
 
-  const walletAddress =
-    address || queryAddress || "0xB9Ffcd5fB867905e2f823a5A29DC7A2cD1C101b5";
+  const walletAddress = queryAddress;
 
   // Now use the extracted address for data fetching
-  const { transactions, isLoading, refetch } = useGetTransactions({
+  const { isLoading, refetch } = useGetTransactions({
     chainId: 42161,
     address: walletAddress,
   });
-
-  console.log("Transactions:", transactions);
 
   // Copy address to clipboard
   const copyToClipboard = () => {
@@ -57,7 +53,10 @@ export default function Dashboard() {
           </div>
           <div className="flex items-center gap-3">
             <div
-              className="p-2 border border-white/10 rounded-full"
+              className={
+                "p-2 border border-white/10 rounded-full cursor-pointer hover:bg-white/20" +
+                (isLoading ? " !animate-spin" : "")
+              }
               onClick={refetch}
             >
               <PiArrowCounterClockwise />
@@ -114,7 +113,7 @@ export default function Dashboard() {
           </div>
           <div className="h-52 relative flex flex-col justify-between gap-7 rounded-[14px] bg-none border border-white/20 p-5"></div>
         </div>
-        <Transactions address={walletAddress} />
+        <Transactions walletAddress={walletAddress} />
       </div>
     </div>
   );
