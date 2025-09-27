@@ -25,7 +25,7 @@ export const useGetTransactions = ({ chainId, address, page }) => {
 
     try {
       // Using Etherscan V2 API for transaction history
-      const url = `${BASE_URL}?chainid=${selectedChainId}&module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=${pageNumber}&offset=100&sort=desc&apikey=${API_TOKEN}`;
+      const url = `${BASE_URL}?chainid=${selectedChainId}&module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=${pageNumber}&sort=desc&apikey=${API_TOKEN}`;
 
       const response = await fetch(url);
 
