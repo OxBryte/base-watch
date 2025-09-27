@@ -21,7 +21,7 @@ export default function ConnectButton() {
         </div>
       ) : (
         <p
-          className="text-xs px-5 py-2 bg-[#0000ff] hover:bg-white/20 rounded-full cursor-pointer"
+          className="text-xs px-5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-full cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl"
           onClick={open}
         >
           Connect wallet
