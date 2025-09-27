@@ -17,8 +17,8 @@ const Tabs = [
 
 export default function Transactions({ walletAddress }) {
   const [tabs, setTabs] = React.useState(0);
-  const { selectedNetworkId } = useAppKitNetwork();
-  console.log(selectedNetworkId);
+  const { chainId } = useAppKitNetwork();
+  console.log(chainId);
 
 
   const {
@@ -28,7 +28,7 @@ export default function Transactions({ walletAddress }) {
     isError,
     error,
   } = useGetTransactions({
-    chainId: selectedNetworkId,
+    chainId: chainId,
     address: walletAddress,
     page: 1,
   });
