@@ -6,6 +6,7 @@ import History from "./History";
 import { PiArrowCounterClockwise } from "react-icons/pi";
 import Nft from "./Nft";
 import Analytics from "./Analytics";
+import { useAppKitNetwork } from "@reown/appkit/react";
 
 const Tabs = [
   { name: "Holdings", icon: <TbCoinFilled size={18} /> },
@@ -16,6 +17,10 @@ const Tabs = [
 
 export default function Transactions({ walletAddress }) {
   const [tabs, setTabs] = React.useState(0);
+  const { selectedNetworkId } = useAppKitNetwork();
+  console.log(selectedNetworkId);
+
+
   const {
     transactions: history,
     isLoading: isLoadingHistory,
@@ -23,7 +28,7 @@ export default function Transactions({ walletAddress }) {
     isError,
     error,
   } = useGetTransactions({
-    chainId: 999,
+    chainId: selectedNetworkId,
     address: walletAddress,
     page: 1,
   });

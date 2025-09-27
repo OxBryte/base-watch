@@ -23,9 +23,6 @@ export default function Dashboard() {
     // Update the key to force a remount of child components
     setKey(walletAddress);
 
-    // You could also do other initialization here if needed
-    console.log("Address changed, reloading dashboard for:", walletAddress);
-
     // Optional: scroll to top when address changes
     window.scrollTo(0, 0);
   }, [walletAddress]);
