@@ -9,7 +9,7 @@ export default function Navbar() {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchAddress.trim()) {
-      navigate(`/portfolio?address=${searchAddress}`);
+      navigate(`?address=${searchAddress}`);
     }
   };
 
