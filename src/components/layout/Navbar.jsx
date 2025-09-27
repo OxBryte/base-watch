@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ConnectButton from "../features/ConnectButton";
 
 export default function Navbar() {
   const [searchAddress, setSearchAddress] = useState("");
@@ -36,9 +37,7 @@ export default function Navbar() {
             <option value="polygon">Polygon</option>
             <option value="optimism">Optimism</option>
           </select> */}
-          <p className="text-xs px-5 py-2 bg-[#0000ff] hover:bg-white/20 rounded-full cursor-pointer">
-            Connect wallet
-          </p>
+         <ConnectButton />
         </div>
       </div>
     </div>
