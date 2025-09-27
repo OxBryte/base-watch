@@ -3,18 +3,22 @@ import { truncateAddress } from "../utils/utils";
 
 export default function ConnectButton() {
   const { open } = useAppKit();
-  const { address, isConnected, caipAddress, status, embeddedWalletInfo } =
-      useAppKitAccount();
-    
-    console.log(caipAddress, embeddedWalletInfo, status);
-    
+  const { address, isConnected, status } = useAppKitAccount();
 
   return (
     <div className="">
-          {isConnected ? (
-              <div className="flex items-center gap-2 bg-gray-300/10 rounded-full px-6 py-2 cursor-pointer" onClick={open}>
-        <p>{truncateAddress(address, 6, 4)}</p>
-              </div>
+      {isConnected ? (
+        <div
+          className="flex items-center gap-2 bg-gray-300/10 rounded-full px-4 py-2 cursor-pointer hover:bg-gray-300/20"
+          onClick={open}
+        >
+          <p className="text-sm font-semibold">
+            {truncateAddress(address, 6, 4)}
+          </p>
+          {status === "connected" && (
+            <div className="w-2 h-2 bg-green-500 rounded-full" />
+          )}
+        </div>
       ) : (
         <p
           className="text-xs px-5 py-2 bg-[#0000ff] hover:bg-white/20 rounded-full cursor-pointer"
