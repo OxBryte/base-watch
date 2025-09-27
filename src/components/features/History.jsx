@@ -1,7 +1,41 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { truncateAddress } from "../utils/utils";
+import { PiCaretLeft, PiCaretRight, PiCaretDoubleLeft, PiCaretDoubleRight } from "react-icons/pi";
 
 export default function History({ transactions = [] }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const transactionsPerPage = 25;
+
+  // Calculate pagination data
+  const paginationData = useMemo(() => {
+    const totalTransactions = transactions.length;
+    const totalPages = Math.ceil(totalTransactions / transactionsPerPage);
+    const startIndex = (currentPage - 1) * transactionsPerPage;
+    const endIndex = startIndex + transactionsPerPage;
+    const currentTransactions = transactions.slice(startIndex, endIndex);
+
+    return {
+      totalTransactions,
+      totalPages,
+      currentTransactions,
+      startIndex,
+      endIndex: Math.min(endIndex, totalTransactions),
+      hasNextPage: currentPage < totalPages,
+      hasPrevPage: currentPage > 1,
+    };
+  }, [transactions, currentPage, transactionsPerPage]);
+
+  // Reset to first page when transactions change
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [transactions]);
+
+  // Pagination handlers
+  const goToFirstPage = () => setCurrentPage(1);
+  const goToPrevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
+  const goToNextPage = () => setCurrentPage(prev => Math.min(prev + 1, paginationData.totalPages));
+  const goToLastPage = () => setCurrentPage(paginationData.totalPages);
+  const goToPage = (page) => setCurrentPage(Math.max(1, Math.min(page, paginationData.totalPages)));
   return (
     <div className="w-full overflow-x-auto">
       <table className="w-full border-collapse">
