@@ -50,7 +50,9 @@ const wagmiAdapter = new WagmiAdapter({
 // 5. Create modal
 createAppKit({
   adapters: [wagmiAdapter],
-  networks,
+    networks,
+    supportedChains: [mainnet, arbitrum, optimism, polygon, base, celo],
+  defaultChain: base,
   projectId,
   metadata,
   features: {

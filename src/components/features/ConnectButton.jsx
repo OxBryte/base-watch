@@ -1,16 +1,21 @@
-import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
+import { useAppKit, useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
 import { truncateAddress } from "../utils/utils";
 
 export default function ConnectButton() {
   const { open } = useAppKit();
-  const { address, isConnected, status } = useAppKitAccount();
+    const { address, isConnected, status } = useAppKitAccount();
+    const { caipNetwork, caipNetworkId, chainId, switchNetwork } =
+        useAppKitNetwork();
+    
+    console.log(caipNetwork, caipNetworkId, chainId);
+    
 
   return (
     <div className="">
       {isConnected ? (
         <div
           className="flex items-center gap-2 bg-gray-300/10 rounded-full px-4 py-2 cursor-pointer hover:bg-gray-300/20"
-          onClick={open}
+          onClick={() => switchNetwork(caipNetworkId)}
         >
           <p className="text-sm font-semibold">
             {truncateAddress(address, 6, 4)}
