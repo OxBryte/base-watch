@@ -1,15 +1,17 @@
 import React from "react";
 import { RiHistoryFill, RiNftFill } from "react-icons/ri";
-import { TbCoinFilled } from "react-icons/tb";
+import { TbCoinFilled, TbChartDots3 } from "react-icons/tb";
 import { useGetTransactions } from "../hooks/useGetTransactions";
 import History from "./History";
 import { PiArrowCounterClockwise } from "react-icons/pi";
 import Nft from "./Nft";
+import Analytics from "./Analytics";
 
 const Tabs = [
   { name: "Holdings", icon: <TbCoinFilled size={18} /> },
   { name: "NFTs", icon: <RiNftFill size={18} /> },
   { name: "Transactions", icon: <RiHistoryFill size={18} /> },
+  { name: "Analytics", icon: <TbChartDots3 size={18} /> },
 ];
 
 export default function Transactions({ walletAddress }) {
@@ -53,7 +55,7 @@ export default function Transactions({ walletAddress }) {
           <PiArrowCounterClockwise />
         </div>
       </div>
-      {tabs ===1 && <Nft address={walletAddress} />}
+      {tabs === 1 && <Nft address={walletAddress} />}
 
       {tabs === 2 && (
         <div className="w-full min-h-53 relative">
@@ -80,6 +82,15 @@ export default function Transactions({ walletAddress }) {
             <History transactions={history} />
           )}
         </div>
+      )}
+
+      {tabs === 3 && (
+        <Analytics
+          transactions={history}
+          isLoading={isLoadingHistory}
+          isError={isError}
+          error={error}
+        />
       )}
     </div>
   );
