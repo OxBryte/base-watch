@@ -64,7 +64,7 @@ const SUPPORTED_NETWORKS = [
 export default function ConnectButton() {
   const { open } = useAppKit();
   const { address, isConnected, status } = useAppKitAccount();
-  const { caipNetwork, chainId, switchNetwork } = useAppKitNetwork();
+  const { chainId, switchNetwork } = useAppKitNetwork();
 
   const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
   const dropdownRef = useRef(null);
