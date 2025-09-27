@@ -18,8 +18,6 @@ const Tabs = [
 export default function Transactions({ walletAddress }) {
   const [tabs, setTabs] = React.useState(0);
   const { chainId } = useAppKitNetwork();
-  console.log(chainId);
-
 
   const {
     transactions: history,
