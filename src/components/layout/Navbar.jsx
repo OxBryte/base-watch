@@ -27,16 +27,6 @@ export default function Navbar() {
           />
         </form>
         <div className="hidden md:flex items-center gap-2">
-          {/* <select
-            className="py-2 px-4 text-sm rounded-full border border-white/10 bg-transparent"
-            onChange={(e) => console.log(`Selected chain: ${e.target.value}`)}
-          >
-            <option value="base">Base</option>
-            <option value="celo">Celo</option>
-            <option value="arbitrum">Arbitrum</option>
-            <option value="polygon">Polygon</option>
-            <option value="optimism">Optimism</option>
-          </select> */}
          <ConnectButton />
         </div>
       </div>

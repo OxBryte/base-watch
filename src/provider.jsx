@@ -39,7 +39,7 @@ const wagmiAdapter = new WagmiAdapter({
 createAppKit({
   adapters: [wagmiAdapter],
   networks,
-  defaultNetwork: base,
+  defaultNetwork: optimism,
   projectId,
   metadata,
   features: {
