@@ -1,6 +1,11 @@
 import React, { useState, useMemo } from "react";
 import { truncateAddress } from "../utils/utils";
-import { PiCaretLeft, PiCaretRight, PiCaretDoubleLeft, PiCaretDoubleRight } from "react-icons/pi";
+import {
+  PiCaretLeft,
+  PiCaretRight,
+  PiCaretDoubleLeft,
+  PiCaretDoubleRight,
+} from "react-icons/pi";
 
 export default function History({ transactions = [] }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,10 +37,12 @@ export default function History({ transactions = [] }) {
 
   // Pagination handlers
   const goToFirstPage = () => setCurrentPage(1);
-  const goToPrevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
-  const goToNextPage = () => setCurrentPage(prev => Math.min(prev + 1, paginationData.totalPages));
+  const goToPrevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+  const goToNextPage = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, paginationData.totalPages));
   const goToLastPage = () => setCurrentPage(paginationData.totalPages);
-  const goToPage = (page) => setCurrentPage(Math.max(1, Math.min(page, paginationData.totalPages)));
+  const goToPage = (page) =>
+    setCurrentPage(Math.max(1, Math.min(page, paginationData.totalPages)));
   return (
     <div className="w-full overflow-x-auto">
       <table className="w-full border-collapse">
@@ -51,7 +58,7 @@ export default function History({ transactions = [] }) {
           </tr>
         </thead>
         <tbody>
-          {transactions.map((tx, index) => {
+          {paginationData.currentTransactions.map((tx, index) => {
             // Calculate transaction type
             const txType = tx.functionName
               ? "Contract"
@@ -76,7 +83,12 @@ export default function History({ transactions = [] }) {
                 key={tx.hash + index}
                 className="border-b border-white/5 hover:bg-white/5"
               >
-                <td className="py-3 px-2 font-mono text-xs">0{index + 1}</td>
+                <td className="py-3 px-2 font-mono text-xs">
+                  {String(paginationData.startIndex + index + 1).padStart(
+                    2,
+                    "0"
+                  )}
+                </td>
                 <td className="py-3 px-2">
                   <span
                     className={`px-2 py-1 rounded-full text-xs ${
@@ -120,6 +132,128 @@ export default function History({ transactions = [] }) {
       {transactions.length === 0 && (
         <div className="text-center py-8 text-white/50">
           No transactions found
+        </div>
+      )}
+
+      {/* Pagination Controls */}
+      {paginationData.totalPages > 1 && (
+        <div className="flex items-center justify-between mt-6 px-2">
+          {/* Results Info */}
+          <div className="text-sm text-white/60">
+            Showing {paginationData.startIndex + 1} to {paginationData.endIndex}{" "}
+            of {paginationData.totalTransactions} transactions
+          </div>
+
+          {/* Pagination Buttons */}
+          <div className="flex items-center gap-2">
+            {/* First Page */}
+            <button
+              onClick={goToFirstPage}
+              disabled={!paginationData.hasPrevPage}
+              className="p-2 rounded-lg border border-white/10 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              title="First page"
+            >
+              <PiCaretDoubleLeft size={16} />
+            </button>
+
+            {/* Previous Page */}
+            <button
+              onClick={goToPrevPage}
+              disabled={!paginationData.hasPrevPage}
+              className="p-2 rounded-lg border border-white/10 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              title="Previous page"
+            >
+              <PiCaretLeft size={16} />
+            </button>
+
+            {/* Page Numbers */}
+            <div className="flex items-center gap-1">
+              {(() => {
+                const pages = [];
+                const totalPages = paginationData.totalPages;
+                const current = currentPage;
+
+                // Always show first page
+                if (totalPages > 0) {
+                  pages.push(1);
+                }
+
+                // Add ellipsis if needed
+                if (current > 4) {
+                  pages.push("...");
+                }
+
+                // Add pages around current
+                const start = Math.max(2, current - 1);
+                const end = Math.min(totalPages - 1, current + 1);
+
+                for (let i = start; i <= end; i++) {
+                  if (!pages.includes(i)) {
+                    pages.push(i);
+                  }
+                }
+
+                // Add ellipsis if needed
+                if (current < totalPages - 3) {
+                  if (!pages.includes("...")) {
+                    pages.push("...");
+                  }
+                }
+
+                // Always show last page
+                if (totalPages > 1 && !pages.includes(totalPages)) {
+                  pages.push(totalPages);
+                }
+
+                return pages.map((page, index) => {
+                  if (page === "...") {
+                    return (
+                      <span
+                        key={`ellipsis-${index}`}
+                        className="px-3 py-2 text-white/50"
+                      >
+                        ...
+                      </span>
+                    );
+                  }
+
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => goToPage(page)}
+                      className={`px-3 py-2 rounded-lg text-sm transition-colors ${
+                        currentPage === page
+                          ? "bg-blue-600 text-white"
+                          : "border border-white/10 hover:bg-white/10 text-white/70"
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                });
+              })()}
+            </div>
+
+            {/* Next Page */}
+            <button
+              onClick={goToNextPage}
+              disabled={!paginationData.hasNextPage}
+              className="p-2 rounded-lg border border-white/10 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              title="Next page"
+            >
+              <PiCaretRight size={16} />
+            </button>
+
+            {/* Last Page */}
+            <button
+              onClick={goToLastPage}
+              disabled={!paginationData.hasNextPage}
+              className="p-2 rounded-lg border border-white/10 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              title="Last page"
+            >
+              <PiCaretDoubleRight size={16} />
+            </button>
+          </div>
         </div>
       )}
     </div>
