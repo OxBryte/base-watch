@@ -27,19 +27,7 @@ const metadata = {
 };
 
 // 3. Set the networks
-const networks = [
-  mainnet,
-  arbitrum,
-  optimism,
-  polygon,
-  base,
-  celo,
-  arbitrum,
-  optimism,
-  polygon,
-  base,
-  celo,
-];
+const networks = [mainnet, arbitrum, optimism, polygon, base, celo];
 // 4. Create Wagmi Adapter
 const wagmiAdapter = new WagmiAdapter({
   networks,
@@ -50,9 +38,8 @@ const wagmiAdapter = new WagmiAdapter({
 // 5. Create modal
 createAppKit({
   adapters: [wagmiAdapter],
-    networks,
-    supportedChains: [mainnet, arbitrum, optimism, polygon, base, celo],
-  defaultChain: base,
+  networks,
+  defaultNetwork: base,
   projectId,
   metadata,
   features: {

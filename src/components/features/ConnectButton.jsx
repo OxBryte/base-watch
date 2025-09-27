@@ -6,15 +6,59 @@ import {
 import { truncateAddress } from "../utils/utils";
 import { useState, useRef, useEffect } from "react";
 import { PiCaretDown, PiCheck } from "react-icons/pi";
+import {
+  mainnet,
+  arbitrum,
+  optimism,
+  polygon,
+  base,
+  celo,
+} from "@reown/appkit/networks";
 
 // Network configurations matching your supported chains
 const SUPPORTED_NETWORKS = [
-  { id: 1, name: "Ethereum", shortName: "ETH", color: "bg-blue-500" },
-  { id: 137, name: "Polygon", shortName: "MATIC", color: "bg-purple-500" },
-  { id: 42161, name: "Arbitrum", shortName: "ARB", color: "bg-blue-400" },
-  { id: 10, name: "Optimism", shortName: "OP", color: "bg-red-500" },
-  { id: 8453, name: "Base", shortName: "BASE", color: "bg-blue-600" },
-  { id: 42220, name: "Celo", shortName: "CELO", color: "bg-green-500" },
+  {
+    id: 1,
+    name: "Ethereum",
+    shortName: "ETH",
+    color: "bg-blue-500",
+    network: mainnet,
+  },
+  {
+    id: 137,
+    name: "Polygon",
+    shortName: "MATIC",
+    color: "bg-purple-500",
+    network: polygon,
+  },
+  {
+    id: 42161,
+    name: "Arbitrum",
+    shortName: "ARB",
+    color: "bg-blue-400",
+    network: arbitrum,
+  },
+  {
+    id: 10,
+    name: "Optimism",
+    shortName: "OP",
+    color: "bg-red-500",
+    network: optimism,
+  },
+  {
+    id: 8453,
+    name: "Base",
+    shortName: "BASE",
+    color: "bg-blue-600",
+    network: base,
+  },
+  {
+    id: 42220,
+    name: "Celo",
+    shortName: "CELO",
+    color: "bg-green-500",
+    network: celo,
+  },
 ];
 
 export default function ConnectButton() {
@@ -42,9 +86,9 @@ export default function ConnectButton() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleNetworkSwitch = async (networkId) => {
+  const handleNetworkSwitch = async (networkConfig) => {
     try {
-      await switchNetwork(networkId);
+      await switchNetwork(networkConfig.network);
       setShowNetworkDropdown(false);
     } catch (error) {
       console.error("Failed to switch network:", error);
@@ -100,7 +144,7 @@ export default function ConnectButton() {
               <div
                 key={network.id}
                 className="flex items-center justify-between px-4 py-2 hover:bg-white/10 cursor-pointer transition-colors"
-                onClick={() => handleNetworkSwitch(network.id)}
+                onClick={() => handleNetworkSwitch(network)}
               >
                 <div className="flex items-center gap-3">
                   <div className={`w-2 h-2 rounded-full ${network.color}`} />
