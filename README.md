@@ -108,6 +108,31 @@ npm run build
 npm run preview
 ```
 
+### 🤖 Auto-Commit Feature
+
+For development convenience, you can enable automatic commits every 2 minutes:
+
+```bash
+# Auto-commit every 2 minutes (default)
+npm run auto-commit
+
+# Custom interval (e.g., every 5 minutes)
+npm run auto-commit:custom 5
+
+# View help and options
+npm run auto-commit:help
+```
+
+**Features:**
+
+- ✅ Automatically commits changes every N minutes
+- ✅ Only commits when there are actual changes
+- ✅ Timestamped commit messages with counters
+- ✅ Shows summary of modified/added/deleted files
+- ✅ Stop anytime with `Ctrl+C`
+
+**Note:** This feature is for development only. See [AUTO_COMMIT.md](docs/AUTO_COMMIT.md) for detailed documentation.
+
 ## 🏗️ Project Structure
 
 ```
