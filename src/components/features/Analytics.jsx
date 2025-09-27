@@ -1,7 +1,14 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { TbCalendarStats, TbTrendingUp, TbCoinFilled } from "react-icons/tb";
 
 const Analytics = ({ transactions, isLoading, isError, error }) => {
+  const [tooltip, setTooltip] = useState({
+    show: false,
+    x: 0,
+    y: 0,
+    data: null,
+  });
+
   // Process transaction data for analytics
   const analyticsData = useMemo(() => {
     if (!transactions || transactions.length === 0) {
@@ -137,6 +144,38 @@ const Analytics = ({ transactions, isLoading, isError, error }) => {
     "Nov",
     "Dec",
   ];
+
+  // Tooltip handlers
+  const handleMouseEnter = (event, dayData) => {
+    if (!dayData) return;
+
+    const rect = event.target.getBoundingClientRect();
+    const scrollLeft =
+      window.pageXOffset || document.documentElement.scrollLeft;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    setTooltip({
+      show: true,
+      x: rect.left + scrollLeft + rect.width / 2,
+      y: rect.top + scrollTop - 10,
+      data: dayData,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setTooltip({ show: false, x: 0, y: 0, data: null });
+  };
+
+  // Format date for tooltip
+  const formatTooltipDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
   if (isLoading) {
     return (
@@ -278,8 +317,9 @@ const Analytics = ({ transactions, isLoading, isError, error }) => {
                     return (
                       <div
                         key={weekIndex}
-                        className={`w-3 h-3 rounded-sm ${bgColor} hover:ring-1 hover:ring-white/50 cursor-pointer transition-all`}
-                        title={`${date}: ${count} transactions`}
+                        className={`w-3 h-3 rounded-sm ${bgColor} hover:ring-1 hover:ring-white/50 cursor-pointer transition-all hover:scale-110`}
+                        onMouseEnter={(e) => handleMouseEnter(e, dayData)}
+                        onMouseLeave={handleMouseLeave}
                       />
                     );
                   })}
@@ -335,6 +375,37 @@ const Analytics = ({ transactions, isLoading, isError, error }) => {
           })}
         </div>
       </div>
+
+      {/* Tooltip */}
+      {tooltip.show && tooltip.data && (
+        <div
+          className="fixed z-50 bg-gray-900 border border-white/20 rounded-lg shadow-xl px-3 py-2 pointer-events-none transform -translate-x-1/2 -translate-y-full"
+          style={{
+            left: tooltip.x,
+            top: tooltip.y,
+          }}
+        >
+          <div className="text-sm text-white font-medium">
+            {formatTooltipDate(tooltip.data.date)}
+          </div>
+          <div className="text-xs text-white/70 mt-1">
+            {tooltip.data.count === 0
+              ? "No transactions"
+              : tooltip.data.count === 1
+              ? "1 transaction"
+              : `${tooltip.data.count} transactions`}
+          </div>
+          {tooltip.data.volume > 0 && (
+            <div className="text-xs text-blue-400 mt-1">
+              {tooltip.data.volume.toFixed(6)} ETH
+            </div>
+          )}
+          {/* Tooltip arrow */}
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2">
+            <div className="border-4 border-transparent border-t-gray-900"></div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
