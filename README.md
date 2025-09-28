@@ -40,6 +40,21 @@ A comprehensive multi-chain portfolio monitoring application for tracking crypto
 - **Mobile Responsive**: Full functionality on all devices
 - **Fast Performance**: Optimized API calls and data caching
 
+### 🔗 Wallet Integration
+
+- **Multi-Wallet Support**: Connect with MetaMask, WalletConnect, and more
+- **Network Switching**: Seamless switching between supported networks
+- **Real-time Connection**: Live connection status with visual indicators
+- **Disconnect Control**: Easy wallet disconnection and management
+
+### 📊 Advanced Analytics
+
+- **Transaction Heatmap**: GitHub-style 365-day activity visualization
+- **Interactive Tooltips**: Hover over any day to see transaction details
+- **Weekly Patterns**: Bar chart showing activity by day of week
+- **Volume Analytics**: Total volume, average transaction value, and peak activity
+- **Smart Data Processing**: Automatic Wei to ETH conversion and date formatting
+
 ## 🌐 Supported Chains
 
 | Chain ID | Network          | Status |
@@ -85,11 +100,13 @@ A comprehensive multi-chain portfolio monitoring application for tracking crypto
 
    ```env
    VITE_ETHERSCAN_API_TOKEN=your_etherscan_api_key_here
+   VITE_REOWN_PROJECT_ID=your_reown_project_id_here
    ```
 
    **Get API Keys:**
 
    - [Etherscan API Key](https://etherscan.io/apis) - For blockchain data
+   - [Reown Project ID](https://dashboard.reown.com) - For wallet connectivity
    - The app also uses HyperScan API for NFT data (no key required)
 
 4. **Start the development server**
@@ -141,15 +158,17 @@ npm run auto-commit:help
 src/
 ├── components/
 │   ├── features/          # Main feature components
+│   │   ├── Analytics.jsx       # Transaction analytics & heatmap
 │   │   ├── BalanceCards.jsx    # Portfolio balance display
-│   │   ├── Transactions.jsx    # Transaction history tabs
-│   │   ├── History.jsx         # Transaction list
-│   │   └── Nft.jsx            # NFT gallery
+│   │   ├── ConnectButton.jsx   # Wallet connection & network switching
+│   │   ├── History.jsx         # Paginated transaction list
+│   │   ├── Nft.jsx            # NFT gallery
+│   │   └── Transactions.jsx    # Transaction history tabs
 │   ├── hooks/             # Custom React hooks
 │   │   ├── useGetaBalance.js      # Balance fetching
-│   │   ├── useGetTransactions.js  # Transaction history
+│   │   ├── useGetHypeNft.js       # NFT data fetching
 │   │   ├── useGetTokens.js        # Token holdings
-│   │   └── useGetHypeNft.js       # NFT data
+│   │   └── useGetTransactions.js  # Transaction history
 │   ├── layout/            # Layout components
 │   │   ├── Layout.jsx          # Main app layout
 │   │   ├── Navbar.jsx          # Navigation with search
@@ -159,6 +178,11 @@ src/
 ├── pages/                 # Route components
 │   ├── Dashboard.jsx           # Main portfolio view
 │   └── Home.jsx               # Landing page
+├── scripts/               # Development tools
+│   └── auto-commit.js          # Auto-commit functionality
+├── docs/                  # Documentation
+│   └── AUTO_COMMIT.md          # Auto-commit guide
+├── provider.jsx           # Wallet & network provider setup
 └── App.jsx               # Main app component
 ```
 
@@ -167,7 +191,9 @@ src/
 - **Frontend Framework**: React 19 with Vite
 - **Routing**: React Router DOM
 - **Styling**: Tailwind CSS 4
-- **State Management**: React Hooks
+- **State Management**: React Hooks + TanStack Query
+- **Wallet Integration**: Reown AppKit (formerly WalletConnect) + Wagmi
+- **Blockchain Interaction**: Viem + Wagmi
 - **HTTP Client**: Axios
 - **Icons**: React Icons
 - **Notifications**: React Hot Toast
