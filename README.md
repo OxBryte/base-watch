@@ -213,12 +213,27 @@ src/
 
 ## 📱 Usage
 
+### 🔗 **Wallet Connection**
+
+1. **Connect Wallet**: Click "Connect wallet" to link your Web3 wallet using wallet connect - (reown)
+2. **Network Selection**: Use the network dropdown to switch between supported chains
+3. **Disconnect**: Click on your address to disconnect when needed
+
+### 🔍 **Portfolio Monitoring**
+
 1. **Search Wallet**: Enter any wallet address in the search bar
 2. **View Portfolio**: Monitor balances, NFTs, and transaction history
 3. **Switch Chains**: Data automatically aggregates from all supported chains
-4. **Navigate Tabs**: Switch between Holdings, NFTs, and Transactions
-5. **Privacy Toggle**: Hide/show sensitive balance information
-6. **Refresh Data**: Use refresh buttons for real-time updates
+4. **Privacy Toggle**: Hide/show sensitive balance information
+5. **Refresh Data**: Use refresh buttons for real-time updates
+
+### 📊 **Advanced Features**
+
+1. **Navigate Tabs**: Switch between Holdings, NFTs, Transactions, and Analytics
+2. **Transaction Pagination**: Browse through transaction history (25 per page)
+3. **Analytics Heatmap**: Hover over any day to see transaction details
+4. **Weekly Patterns**: Analyze your transaction patterns by day of week
+5. **NFT Gallery**: Browse your NFT collection with load-more functionality
 
 ## 🤝 Contributing
 
