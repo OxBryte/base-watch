@@ -20,10 +20,12 @@ A comprehensive multi-chain portfolio monitoring application for tracking crypto
 
 ### 📈 Transaction History
 
-- **Complete Transaction Log**: View all wallet transactions
-- **Transaction Details**: Comprehensive transaction information
+- **Complete Transaction Log**: View all wallet transactions with pagination (25 per page)
+- **Transaction Details**: Comprehensive transaction information with external links
 - **Multi-chain Aggregation**: Transactions from all supported networks
 - **Real-time Updates**: Live transaction monitoring
+- **Smart Pagination**: Navigate through large transaction histories efficiently
+- **Interactive Analytics**: GitHub-style heatmap showing 365 days of activity
 
 ### 🔍 Address Search
 
